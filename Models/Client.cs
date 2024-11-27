@@ -1,15 +1,27 @@
-﻿using System.IO.Compression;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace invoice_system_backend.Models
 {
     public class Client
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public int Zip { get; set; }
-        public string Email { get; set; }
-        public int Phone { get; set; }
+        [Key]
+        [Required]
         public string InvoiceCode { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string Address { get; set; }
+
+        [Required]
+        public string Zip { get; set; }
+
+        [Required]
+        public string Email { get; set; }
+
+        [Required]
+        public string Phone { get; set; }
+        
     }
 }
