@@ -5,17 +5,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Retrieve password from environment variable
 var password = Environment.GetEnvironmentVariable("PG_PASSWORD");
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    .Replace("ENV_DB_PASSWORD", password);
-
-// Add services to the container.
-
-builder.Services.AddControllers();
 
 // Add DbContext
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    .Replace("ENV_DB_PASSWORD", password);
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString(connectionString)));
-builder.Services.AddEndpointsApiExplorer();
+    options.UseNpgsql(connectionString));
+
+// Add services to the container.
+builder.Services.AddControllers();
 
 // Enabling CORS for React App
 builder.Services.AddCors(options =>
