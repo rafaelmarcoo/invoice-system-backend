@@ -8,9 +8,10 @@ var password = Environment.GetEnvironmentVariable("PG_PASSWORD");
 
 // Add DbContext
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    .Replace("ENV_DB_PASSWORD", password);
+                                            .Replace("ENV_DB_PASSWORD", password);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
+Console.WriteLine($"Connection String: {connectionString}");
 
 // Add services to the container.
 builder.Services.AddControllers();
