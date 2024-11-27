@@ -3,12 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Retrieve password from environment variable
-var password = Environment.GetEnvironmentVariable("PG_PASSWORD");
-
 // Add DbContext
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-                                            .Replace("ENV_DB_PASSWORD", password);
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 Console.WriteLine($"Connection String: {connectionString}");
