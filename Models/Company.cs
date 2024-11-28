@@ -7,22 +7,25 @@ namespace invoice_system_backend.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Company Name is required")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "GST Number is required")]
+        public string GST { get; set; }
+
+        [Required(ErrorMessage = "Company Address Number is required")]
         public string Address { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Company City is required")]
         public string City { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Company Zip is required")]
         public string Zip { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Company Phone is required")]
         public string Phone { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Company Email is required")]
         public string Email { get; set; }
     }
 }
