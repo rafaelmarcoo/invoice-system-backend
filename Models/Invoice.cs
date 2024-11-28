@@ -21,7 +21,7 @@ namespace invoice_system_backend.Models
         public decimal Amount { get; set; }
 
         [Required]
-        public int GST { get; set; }
+        public int GST_Number { get; set; }
 
         public bool IsPaid { get; set; }
 

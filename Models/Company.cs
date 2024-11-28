@@ -11,7 +11,7 @@ namespace invoice_system_backend.Models
         public string Name { get; set; }
 
         [Required(ErrorMessage = "GST Number is required")]
-        public string GST { get; set; }
+        public string GST_Number { get; set; }
 
         [Required(ErrorMessage = "Company Address Number is required")]
         public string Address { get; set; }
