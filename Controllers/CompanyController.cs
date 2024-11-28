@@ -1,8 +1,7 @@
 ﻿using invoice_system_backend.Data;
-using Microsoft.AspNetCore.Http.HttpResults;
+using invoice_system_backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using invoice_system_backend.Models;
 
 namespace invoice_system_backend.Controllers
 {
@@ -27,7 +26,7 @@ namespace invoice_system_backend.Controllers
 
             var existingCompany = await _context.Companies.FindAsync(1);
 
-            if(existingCompany == null)
+            if (existingCompany == null)
             {
                 return NotFound(new { message = "Company not found" });
             }
@@ -45,7 +44,7 @@ namespace invoice_system_backend.Controllers
                 await _context.SaveChangesAsync();
                 return Ok(new { message = "Company details updated successfully!" });
             }
-            catch(DbUpdateException ex)
+            catch (DbUpdateException ex)
             {
                 return StatusCode(500, new { message = "Database error occurred", error = ex.Message });
             }
