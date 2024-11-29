@@ -6,10 +6,10 @@ namespace invoice_system_backend.Models
     public class Client
     {
         [Key]
-        public string Company_Code { get; set; }
+        public string CompanyCode { get; set; }
 
         [Required]
-        public string GST_Number { get; set; }
+        public string GstNumber { get; set; }
 
         [Required]
         public string Name { get; set; }

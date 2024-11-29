@@ -25,7 +25,7 @@ namespace invoice_system_backend.Models
         [Required]
         public bool IsPaid { get; set; }
 
-        public string Company_Code { get; set; }
+        public string CompanyCode { get; set; }
         public Client client { get; set; }
     }
 }

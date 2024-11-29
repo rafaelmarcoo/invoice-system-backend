@@ -32,7 +32,7 @@ namespace invoice_system_backend.Controllers
             }
 
             existingCompany.Name = updatedCompany.Name;
-            existingCompany.GST_Number = updatedCompany.GST_Number;
+            existingCompany.GstNumber = updatedCompany.GstNumber;
             existingCompany.Address = updatedCompany.Address;
             existingCompany.City = updatedCompany.City;
             existingCompany.Zip = updatedCompany.Zip;
