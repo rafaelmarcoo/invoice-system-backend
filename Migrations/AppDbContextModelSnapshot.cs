@@ -24,7 +24,7 @@ namespace invoice_system_backend.Migrations
 
             modelBuilder.Entity("invoice_system_backend.Models.Client", b =>
                 {
-                    b.Property<string>("InvoiceCode")
+                    b.Property<string>("Company_Code")
                         .HasColumnType("text");
 
                     b.Property<string>("Address")
@@ -35,19 +35,22 @@ namespace invoice_system_backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("GST_Number")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Phone")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Zip")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("InvoiceCode");
+                    b.HasKey("Company_Code");
 
                     b.ToTable("Clients");
                 });
@@ -125,34 +128,58 @@ namespace invoice_system_backend.Migrations
 
             modelBuilder.Entity("invoice_system_backend.Models.Invoice", b =>
                 {
-                    b.Property<string>("InvoiceCode")
-                        .HasColumnType("text");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric");
 
-                    b.Property<DateOnly>("DateDue")
+                    b.Property<string>("Company_Code")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateOnly>("Date_Due")
                         .HasColumnType("date");
 
-                    b.Property<DateOnly>("DateSent")
+                    b.Property<DateOnly>("Date_Sent")
                         .HasColumnType("date");
 
-                    b.Property<int>("GST_Number")
-                        .HasColumnType("integer");
+                    b.Property<string>("Frequency")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsPaid")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsRecurring")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("InvoiceCode");
+                    b.Property<string>("clientCompany_Code")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("clientCompany_Code");
 
                     b.ToTable("Invoices");
+                });
+
+            modelBuilder.Entity("invoice_system_backend.Models.Invoice", b =>
+                {
+                    b.HasOne("invoice_system_backend.Models.Client", "client")
+                        .WithMany("Invoices")
+                        .HasForeignKey("clientCompany_Code");
+
+                    b.Navigation("client");
+                });
+
+            modelBuilder.Entity("invoice_system_backend.Models.Client", b =>
+                {
+                    b.Navigation("Invoices");
                 });
 #pragma warning restore 612, 618
         }

@@ -5,26 +5,27 @@ namespace invoice_system_backend.Models
     public class Invoice
     {
         [Key]
-        [Required]
-        public string InvoiceCode { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string Name { get; set; }
 
         [Required]
-        public DateOnly DateSent { get; set; }
+        public string Frequency { get; set; }
 
         [Required]
-        public DateOnly DateDue { get; set; }
+        public DateOnly Date_Sent { get; set; }
+
+        [Required]
+        public DateOnly Date_Due { get; set; }
 
         [Required]
         public decimal Amount { get; set; }
 
         [Required]
-        public int GST_Number { get; set; }
-
         public bool IsPaid { get; set; }
 
-        public bool IsRecurring { get; set; }
+        public string Company_Code { get; set; }
+        public Client client { get; set; }
     }
 }
