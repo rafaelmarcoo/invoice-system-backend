@@ -36,12 +36,14 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+app.UseCors("AllowReactApp");
+
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseCors("AllowReactApp");
+
 
 app.Run();
