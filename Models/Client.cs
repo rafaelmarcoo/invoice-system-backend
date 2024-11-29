@@ -18,13 +18,16 @@ namespace invoice_system_backend.Models
         public string Address { get; set; }
 
         [Required]
+        public string City { get; set; }
+
+        [Required]
         public string Zip { get; set; }
 
         [Required]
         public string Email { get; set; }
 
         [Required]
-        public int Phone { get; set; }
+        public string Phone { get; set; }
 
         public List<Invoice> Invoices { get; set; }
     }
