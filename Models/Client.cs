@@ -6,6 +6,8 @@ namespace invoice_system_backend.Models
     public class Client
     {
         [Key]
+        public int Id { get; set; }
+
         public string CompanyCode { get; set; }
 
         [Required]

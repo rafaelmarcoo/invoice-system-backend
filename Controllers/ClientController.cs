@@ -39,12 +39,12 @@ namespace invoice_system_backend.Controllers
             }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> EditClient([FromBody] Client updatedClient)
+        [HttpPut("{editId}")]
+        public async Task<IActionResult> EditClient([FromBody] Client updatedClient, int editId)
         {
             try
             {
-                var client = await _context.Clients.FirstOrDefaultAsync(c => c.CompanyCode == updatedClient.CompanyCode);
+                var client = await _context.Clients.FirstOrDefaultAsync(c => c.Id == editId);
 
                 client.CompanyCode = updatedClient.CompanyCode;
                 client.GstNumber = updatedClient.GstNumber;
@@ -64,12 +64,12 @@ namespace invoice_system_backend.Controllers
             }
         }
 
-        [HttpDelete("{deleteCode}")]
-        public async Task<IActionResult> DeleteClient(string deleteCode)
+        [HttpDelete("{deleteId}")]
+        public async Task<IActionResult> DeleteClient(int deleteId)
         {
             try
             {
-                var deleteClient = await _context.Clients.FirstOrDefaultAsync(c => c.CompanyCode == deleteCode);
+                var deleteClient = await _context.Clients.FirstOrDefaultAsync(c => c.Id == deleteId);
                 _context.Clients.Remove(deleteClient);
                 await _context.SaveChangesAsync();
                 return Ok(new { message = "Client deleted successfully!" });
