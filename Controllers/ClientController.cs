@@ -38,5 +38,30 @@ namespace invoice_system_backend.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
+
+        [HttpPut]
+        public async Task<IActionResult> EditClient([FromBody] Client updatedClient)
+        {
+            try
+            {
+                var client = await _context.Clients.FirstOrDefaultAsync(c => c.CompanyCode == updatedClient.CompanyCode);
+
+                client.CompanyCode = updatedClient.CompanyCode;
+                client.GstNumber = updatedClient.GstNumber;
+                client.Name = updatedClient.Name;
+                client.Address = updatedClient.Address;
+                client.City = updatedClient.City;
+                client.Zip = updatedClient.Zip;
+                client.Email = updatedClient.Email;
+                client.Phone = updatedClient.Phone;
+
+                await _context.SaveChangesAsync();
+                return Ok(new { message = "Client details updated succesfully" });
+            }
+            catch(Exception e)
+            {
+                return BadRequest(new { error = e.Message });
+            }
+        }
     }
 }
