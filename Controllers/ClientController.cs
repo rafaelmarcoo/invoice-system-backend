@@ -26,13 +26,17 @@ namespace invoice_system_backend.Controllers
         [HttpPost]
         public async Task<IActionResult> AddClient([FromBody] Client client)
         {
+            try
+            {
+                _context.Clients.Add(client);
+                await _context.SaveChangesAsync();
 
-            Console.WriteLine($"Incoming client: {System.Text.Json.JsonSerializer.Serialize(client)}");
-
-            _context.Clients.Add(client);
-            await _context.SaveChangesAsync();
-
-            return Ok(new { message="Succefully added a new client!" });
+                return Ok(new { message = "Successfully added a new client!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
     }
 }
