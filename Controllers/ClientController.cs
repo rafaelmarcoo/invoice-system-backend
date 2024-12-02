@@ -33,9 +33,9 @@ namespace invoice_system_backend.Controllers
 
                 return Ok(new { message = "Successfully added a new client!" });
             }
-            catch (Exception ex)
+            catch (Exception E)
             {
-                return BadRequest(new { error = ex.Message });
+                return BadRequest(new { error = E.Message });
             }
         }
 
@@ -58,9 +58,25 @@ namespace invoice_system_backend.Controllers
                 await _context.SaveChangesAsync();
                 return Ok(new { message = "Client details updated succesfully" });
             }
-            catch(Exception e)
+            catch(Exception E)
             {
-                return BadRequest(new { error = e.Message });
+                return BadRequest(new { error = E.Message });
+            }
+        }
+
+        [HttpDelete("{deleteCode}")]
+        public async Task<IActionResult> DeleteClient(string deleteCode)
+        {
+            try
+            {
+                var deleteClient = await _context.Clients.FirstOrDefaultAsync(c => c.CompanyCode == deleteCode);
+                _context.Clients.Remove(deleteClient);
+                await _context.SaveChangesAsync();
+                return Ok(new { message = "Client deleted successfully!" });
+            }
+            catch(Exception E)
+            {
+                return BadRequest(new { error = E.Message });
             }
         }
     }
