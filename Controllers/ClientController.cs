@@ -19,8 +19,15 @@ namespace invoice_system_backend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetClientList()
         {
-            var clientList = await _context.Clients.ToListAsync();
-            return Ok(clientList);
+            try
+            {
+                var clientList = await _context.Clients.ToListAsync();
+                return Ok(clientList);
+            }
+            catch(Exception E)
+            {
+                return BadRequest(new { error = E.Message });
+            }
         }
 
         [HttpPost]

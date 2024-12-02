@@ -30,7 +30,5 @@ namespace invoice_system_backend.Models
 
         [Required]
         public string Phone { get; set; }
-
-        //public List<Invoice> Invoices { get; set; }
     }
 }
