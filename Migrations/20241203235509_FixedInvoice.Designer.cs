@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using invoice_system_backend.Data;
@@ -11,9 +12,11 @@ using invoice_system_backend.Data;
 namespace invoice_system_backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241203235509_FixedInvoice")]
+    partial class FixedInvoice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,16 +149,14 @@ namespace invoice_system_backend.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<float>("Amount")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
 
-                    b.Property<string>("DateDue")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<DateOnly>("DateDue")
+                        .HasColumnType("date");
 
-                    b.Property<string>("DateSent")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<DateOnly>("DateSent")
+                        .HasColumnType("date");
 
                     b.Property<string>("Frequency")
                         .IsRequired()
@@ -189,11 +190,11 @@ namespace invoice_system_backend.Migrations
                     b.Property<int>("InvoiceId")
                         .HasColumnType("integer");
 
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
 
-                    b.Property<float>("Quantity")
-                        .HasColumnType("real");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

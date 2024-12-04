@@ -14,15 +14,15 @@ namespace invoice_system_backend.Models
         public string Frequency { get; set; }
 
         [Required]
-        public DateOnly Date_Sent { get; set; }
+        public string DateSent { get; set; }
 
         [Required]
-        public DateOnly Date_Due { get; set; }
+        public string DateDue { get; set; }
 
-        [Required]
-        public decimal Amount { get; set; }
+        public float Amount { get; set; }
 
-        [Required]
-        public bool IsPaid { get; set; }
+        public string Status { get; set; } = "Sent";
+
+        public List<InvoiceItem> Items { get; set; } = new List<InvoiceItem>();
     }
 }
