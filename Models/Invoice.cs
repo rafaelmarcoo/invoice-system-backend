@@ -19,7 +19,7 @@ namespace invoice_system_backend.Models
         [Required]
         public string DateDue { get; set; }
 
-        public float Amount { get; set; }
+        public decimal Amount { get; set; }
 
         public string Status { get; set; } = "Sent";
 

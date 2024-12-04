@@ -20,6 +20,11 @@ namespace invoice_system_backend.Controllers
         public async Task<IActionResult> AddInvoice([FromBody] Invoice newInvoice)
         {
             var currentDate = DateOnly.FromDateTime(DateTime.Now).ToString();
+            decimal totalAmt = 0;
+            foreach (var item in newInvoice.Items)
+            {
+                totalAmt += item.Quantity * item.Price;
+            }
 
             try
             {
@@ -29,7 +34,7 @@ namespace invoice_system_backend.Controllers
                     Frequency = newInvoice.Frequency,
                     DateSent = currentDate,
                     DateDue = newInvoice.DateDue,
-                    Amount = newInvoice.Items.Sum(i => i.Quantity * i.Price),
+                    Amount = totalAmt,
                     Items = newInvoice.Items
                 };
 
@@ -40,10 +45,11 @@ namespace invoice_system_backend.Controllers
                 {
                     var item = new InvoiceItem
                     {
-                        InvoiceId = invoice.Id,
+                        Id = eachItem.Id,
                         Description = eachItem.Description,
                         Quantity = eachItem.Quantity,
                         Price = eachItem.Price,
+                        InvoiceId = invoice.Id
                     };
                     _context.InvoiceItems.Add(item);
                 }
