@@ -19,7 +19,7 @@ namespace invoice_system_backend.Controllers
         [HttpPost]
         public async Task<IActionResult> AddInvoice([FromBody] Invoice newInvoice)
         {
-            var currentDate = DateOnly.FromDateTime(DateTime.Now);
+            var currentDate = DateOnly.FromDateTime(DateTime.Now).ToString();
 
             try
             {
@@ -27,7 +27,7 @@ namespace invoice_system_backend.Controllers
                 {
                     Name = newInvoice.Name,
                     Frequency = newInvoice.Frequency,
-                    DateSent = currentDate.ToString(),
+                    DateSent = currentDate,
                     DateDue = newInvoice.DateDue,
                     Amount = newInvoice.Items.Sum(i => i.Quantity * i.Price),
                     Items = newInvoice.Items
