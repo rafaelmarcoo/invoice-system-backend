@@ -13,10 +13,8 @@ namespace invoice_system_backend.Models
         [Required]
         public string Frequency { get; set; }
 
-        [Required]
         public string DateSent { get; set; }
 
-        [Required]
         public string DateDue { get; set; }
 
         public decimal Amount { get; set; }

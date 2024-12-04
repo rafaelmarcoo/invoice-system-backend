@@ -19,39 +19,32 @@ namespace invoice_system_backend.Controllers
         [HttpPost]
         public async Task<IActionResult> AddInvoice([FromBody] Invoice newInvoice)
         {
-            var currentDate = DateOnly.FromDateTime(DateTime.Now).ToString();
+            var currentDate = DateTime.Now.ToString("yyyy-MM-dd");
             decimal totalAmt = 0;
             foreach (var item in newInvoice.Items)
             {
-                totalAmt += item.Quantity * item.Price;
+                decimal price = Convert.ToDecimal(item.Price);
+                decimal quantity = Convert.ToDecimal(item.Quantity);
+
+                totalAmt += quantity * price;
             }
 
             try
             {
-                var invoice = new Invoice
-                {
-                    Name = newInvoice.Name,
-                    Frequency = newInvoice.Frequency,
-                    DateSent = currentDate,
-                    DateDue = newInvoice.DateDue,
-                    Amount = totalAmt,
-                    Items = newInvoice.Items
-                };
+                newInvoice.DateSent = currentDate;
+                newInvoice.Amount = totalAmt;
 
-                _context.Invoices.Add(invoice);
+                _context.Invoices.Add(newInvoice);
                 await _context.SaveChangesAsync();
 
-                foreach (var eachItem in invoice.Items)
+                foreach (var eachItem in newInvoice.Items)
                 {
-                    var item = new InvoiceItem
-                    {
-                        Id = eachItem.Id,
-                        Description = eachItem.Description,
-                        Quantity = eachItem.Quantity,
-                        Price = eachItem.Price,
-                        InvoiceId = invoice.Id
-                    };
-                    _context.InvoiceItems.Add(item);
+                    decimal price = Convert.ToDecimal(eachItem.Price);
+                    decimal quantity = Convert.ToDecimal(eachItem.Quantity);
+                    eachItem.Price = price;
+                    eachItem.Quantity = quantity;
+                    eachItem.InvoiceId = newInvoice.Id;
+                    _context.InvoiceItems.Add(eachItem);
                 }
 
                 await _context.SaveChangesAsync();
