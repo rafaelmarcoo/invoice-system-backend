@@ -19,26 +19,17 @@ namespace invoice_system_backend.Controllers
         [HttpPost]
         public async Task<IActionResult> AddInvoice([FromBody] Invoice newInvoice)
         {
-            //var currentDate = DateTime.Now.ToString("yyyy-MM-dd");
-            //float totalAmt = 0;
-            //foreach (var item in newInvoice.Items)
-            //{
-            //    totalAmt += item.Quantity * item.Price;
-            //}
-
             try
             {
-                //newInvoice.DateSent = currentDate;
-                //newInvoice.Amount = totalAmt;
-
                 _context.Invoices.Add(newInvoice);
                 await _context.SaveChangesAsync();
 
-                foreach (var eachItem in newInvoice.Items)
-                {
-                    //eachItem.InvoiceId = newInvoice.Id;
-                    _context.InvoiceItems.Add(eachItem);
-                }
+                //foreach (var eachItem in newInvoice.Items)
+                //{
+                //    eachItem.Id = 0;  // Ensure ID is not set so EF can handle it automatically
+                //    eachItem.InvoiceId = newInvoice.Id;  // Link InvoiceId to the newly created Invoice
+                //    _context.InvoiceItems.Add(eachItem);
+                //}
 
                 await _context.SaveChangesAsync();
 

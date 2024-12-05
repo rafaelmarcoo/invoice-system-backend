@@ -12,8 +12,8 @@ using invoice_system_backend.Data;
 namespace invoice_system_backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241203224540_RenamingInvoiceFields")]
-    partial class RenamingInvoiceFields
+    [Migration("20241205003240_FreshStart")]
+    partial class FreshStart
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -149,14 +149,16 @@ namespace invoice_system_backend.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("numeric");
+                    b.Property<float>("Amount")
+                        .HasColumnType("real");
 
-                    b.Property<DateOnly>("DateDue")
-                        .HasColumnType("date");
+                    b.Property<string>("DateDue")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<DateOnly>("DateSent")
-                        .HasColumnType("date");
+                    b.Property<string>("DateSent")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Frequency")
                         .IsRequired()
@@ -190,17 +192,17 @@ namespace invoice_system_backend.Migrations
                     b.Property<int>("InvoiceId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("integer");
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
+                    b.Property<float>("Quantity")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
                     b.HasIndex("InvoiceId");
 
-                    b.ToTable("InvoiceItem");
+                    b.ToTable("InvoiceItems");
                 });
 
             modelBuilder.Entity("invoice_system_backend.Models.InvoiceItem", b =>

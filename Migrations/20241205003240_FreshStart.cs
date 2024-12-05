@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace invoice_system_backend.Migrations
 {
     /// <inheritdoc />
-    public partial class FreshMigration : Migration
+    public partial class FreshStart : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,17 +16,20 @@ namespace invoice_system_backend.Migrations
                 name: "Clients",
                 columns: table => new
                 {
-                    Company_Code = table.Column<string>(type: "text", nullable: false),
-                    GST_Number = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CompanyCode = table.Column<string>(type: "text", nullable: false),
+                    GstNumber = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Address = table.Column<string>(type: "text", nullable: false),
+                    City = table.Column<string>(type: "text", nullable: false),
                     Zip = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
-                    Phone = table.Column<int>(type: "integer", nullable: false)
+                    Phone = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clients", x => x.Company_Code);
+                    table.PrimaryKey("PK_Clients", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -36,7 +39,7 @@ namespace invoice_system_backend.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    GST_Number = table.Column<string>(type: "text", nullable: false),
+                    GstNumber = table.Column<string>(type: "text", nullable: false),
                     Address = table.Column<string>(type: "text", nullable: false),
                     City = table.Column<string>(type: "text", nullable: false),
                     Zip = table.Column<string>(type: "text", nullable: false),
@@ -73,32 +76,50 @@ namespace invoice_system_backend.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Frequency = table.Column<string>(type: "text", nullable: false),
-                    Date_Sent = table.Column<DateOnly>(type: "date", nullable: false),
-                    Date_Due = table.Column<DateOnly>(type: "date", nullable: false),
-                    Amount = table.Column<decimal>(type: "numeric", nullable: false),
-                    IsPaid = table.Column<bool>(type: "boolean", nullable: false),
-                    Company_Code = table.Column<string>(type: "text", nullable: false),
-                    clientCompany_Code = table.Column<string>(type: "text", nullable: true)
+                    DateSent = table.Column<string>(type: "text", nullable: false),
+                    DateDue = table.Column<string>(type: "text", nullable: false),
+                    Amount = table.Column<float>(type: "real", nullable: false),
+                    Status = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Invoices", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InvoiceItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    Quantity = table.Column<float>(type: "real", nullable: false),
+                    Price = table.Column<float>(type: "real", nullable: false),
+                    InvoiceId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InvoiceItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Invoices_Clients_clientCompany_Code",
-                        column: x => x.clientCompany_Code,
-                        principalTable: "Clients",
-                        principalColumn: "Company_Code");
+                        name: "FK_InvoiceItems_Invoices_InvoiceId",
+                        column: x => x.InvoiceId,
+                        principalTable: "Invoices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Invoices_clientCompany_Code",
-                table: "Invoices",
-                column: "clientCompany_Code");
+                name: "IX_InvoiceItems_InvoiceId",
+                table: "InvoiceItems",
+                column: "InvoiceId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Clients");
+
             migrationBuilder.DropTable(
                 name: "Companies");
 
@@ -106,10 +127,10 @@ namespace invoice_system_backend.Migrations
                 name: "Expenses");
 
             migrationBuilder.DropTable(
-                name: "Invoices");
+                name: "InvoiceItems");
 
             migrationBuilder.DropTable(
-                name: "Clients");
+                name: "Invoices");
         }
     }
 }
