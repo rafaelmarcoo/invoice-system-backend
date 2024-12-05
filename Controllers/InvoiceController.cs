@@ -2,6 +2,7 @@
 using invoice_system_backend.Data;
 using invoice_system_backend.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace invoice_system_backend.Controllers
 {
@@ -32,6 +33,20 @@ namespace invoice_system_backend.Controllers
                 return BadRequest(new { error = E.Message});
             }
             
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetInvoices()
+        {
+            try
+            {
+                var invoiceList = await _context.Invoices.ToListAsync();
+                return Ok(invoiceList);
+            }
+            catch (Exception E)
+            {
+                return BadRequest(new { error = E.Message });
+            }
         }
     }
 }
