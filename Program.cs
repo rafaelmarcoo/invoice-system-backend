@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Cors;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add DbContext
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 

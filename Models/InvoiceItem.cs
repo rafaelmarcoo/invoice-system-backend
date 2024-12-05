@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace invoice_system_backend.Models
 {
@@ -7,12 +8,17 @@ namespace invoice_system_backend.Models
         [Key]
         public int Id { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
-        public decimal Quantity { get; set; }
+        [Required]
+        public float Quantity { get; set; }
 
-        public decimal Price { get; set; }
+        [Required]
+        public float Price { get; set; }
 
+        [Required]
+        [ForeignKey("Invoice")]
         public int InvoiceId { get; set; }
     }
 }

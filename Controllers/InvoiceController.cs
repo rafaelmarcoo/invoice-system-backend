@@ -19,31 +19,24 @@ namespace invoice_system_backend.Controllers
         [HttpPost]
         public async Task<IActionResult> AddInvoice([FromBody] Invoice newInvoice)
         {
-            var currentDate = DateTime.Now.ToString("yyyy-MM-dd");
-            decimal totalAmt = 0;
-            foreach (var item in newInvoice.Items)
-            {
-                decimal price = Convert.ToDecimal(item.Price);
-                decimal quantity = Convert.ToDecimal(item.Quantity);
-
-                totalAmt += quantity * price;
-            }
+            //var currentDate = DateTime.Now.ToString("yyyy-MM-dd");
+            //float totalAmt = 0;
+            //foreach (var item in newInvoice.Items)
+            //{
+            //    totalAmt += item.Quantity * item.Price;
+            //}
 
             try
             {
-                newInvoice.DateSent = currentDate;
-                newInvoice.Amount = totalAmt;
+                //newInvoice.DateSent = currentDate;
+                //newInvoice.Amount = totalAmt;
 
                 _context.Invoices.Add(newInvoice);
                 await _context.SaveChangesAsync();
 
                 foreach (var eachItem in newInvoice.Items)
                 {
-                    decimal price = Convert.ToDecimal(eachItem.Price);
-                    decimal quantity = Convert.ToDecimal(eachItem.Quantity);
-                    eachItem.Price = price;
-                    eachItem.Quantity = quantity;
-                    eachItem.InvoiceId = newInvoice.Id;
+                    //eachItem.InvoiceId = newInvoice.Id;
                     _context.InvoiceItems.Add(eachItem);
                 }
 
