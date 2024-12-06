@@ -48,5 +48,22 @@ namespace invoice_system_backend.Controllers
                 return BadRequest(new { error = E.Message });
             }
         }
+
+        [HttpPut("{editId}")]
+        public async Task<IActionResult> EditInvoice(int editId)
+        {
+            try
+            {
+                var invoice = await _context.Invoices.FirstOrDefaultAsync(inv => inv.Id == editId);
+                invoice.Status = "Paid";
+
+                await _context.SaveChangesAsync();
+                return Ok(new { message = "Invoice marked as paid!" });
+            }
+            catch(Exception E)
+            {
+                return BadRequest(new { error = E.Message });
+            }
+        }
     }
 }
