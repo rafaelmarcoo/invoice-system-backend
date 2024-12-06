@@ -12,12 +12,12 @@ namespace invoice_system_backend.Models
 
         public string Description { get; set; }
 
-        public string? File { get; set; }
+        public string FilePath { get; set; }
 
         [Required]
-        public DateOnly Date { get; set; }
+        public string Date { get; set; }
 
         [Required]
-        public decimal Amount { get; set; }
+        public float Amount { get; set; }
     }
 }
