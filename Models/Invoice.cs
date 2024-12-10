@@ -20,7 +20,13 @@ namespace invoice_system_backend.Models
         public string DateDue { get; set; }
 
         [Required]
+        public string DatePaid { get; set; }
+
+        [Required]
         public float Amount { get; set; }
+
+        [Required]
+        public float Gst { get; set; }
 
         [Required]
         public string Status { get; set; }

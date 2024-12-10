@@ -57,6 +57,9 @@ namespace invoice_system_backend.Controllers
                 var invoice = await _context.Invoices.FirstOrDefaultAsync(inv => inv.Id == editId);
                 invoice.Status = "Paid";
 
+                String currentDate = DateTime.Now.ToString("yyyy-MM-dd");
+                invoice.DatePaid = currentDate;
+
                 await _context.SaveChangesAsync();
                 return Ok(new { message = "Invoice marked as paid!" });
             }
