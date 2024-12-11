@@ -49,5 +49,19 @@ namespace invoice_system_backend.Controllers
                 return StatusCode(500, new { message = "Database error occurred", error = ex.Message });
             }
         }
+
+        [HttpGet("{getId}")]
+        public async Task<IActionResult> GetCompanyDetails(int getId)
+        {
+            try
+            {
+                var details = await _context.Companies.FirstOrDefaultAsync(i => i.Id == getId);
+                return Ok(details);
+            }
+            catch(Exception E)
+            {
+                return BadRequest(new { error = E.Message });
+            }
+        }
     }
 }
