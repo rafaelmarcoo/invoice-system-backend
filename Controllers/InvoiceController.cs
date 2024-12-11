@@ -94,7 +94,8 @@ namespace invoice_system_backend.Controllers
                 invoice.FilePath = pdf.FileName;
                 await _context.SaveChangesAsync();
 
-                return Ok(new { message = "Invoice saved successfully!", FilePath = filePath });
+                //return Ok(new { message = "Invoice saved successfully!", FilePath = filePath });
+                return Ok(new { message = "Invoice saved successfully!" });
             }
             catch(Exception E)
             {
