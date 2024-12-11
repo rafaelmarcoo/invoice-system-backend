@@ -71,6 +71,20 @@ namespace invoice_system_backend.Controllers
             }
         }
 
+        [HttpGet("{companyCode}")]
+        public async Task<IActionResult> GetClientByCode(string companyCode)
+        {
+            try
+            {
+                var client = await _context.Clients.FirstOrDefaultAsync(i => i.CompanyCode == companyCode);
+                return Ok(client);
+            }
+            catch(Exception E)
+            {
+                return BadRequest(new { error = E.Message });
+            }
+        }
+
         [HttpDelete("{deleteId}")]
         public async Task<IActionResult> DeleteClient(int deleteId)
         {

@@ -25,7 +25,11 @@ namespace invoice_system_backend.Controllers
                 _context.Invoices.Add(newInvoice);
                 await _context.SaveChangesAsync();
 
-                return Ok(new { message = "Succesfully made a new invoice!" });
+                var createdInv = await _context.Invoices.FirstOrDefaultAsync(i => i.Id == newInvoice.Id);
+
+                //return Ok(new { message = "Succesfully made a new invoice!" });
+                //return Ok(new { id = newInvoice.Id });
+                return Ok(createdInv);
 
             }
             catch(Exception E)
