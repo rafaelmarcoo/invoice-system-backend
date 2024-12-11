@@ -101,5 +101,19 @@ namespace invoice_system_backend.Controllers
                 return BadRequest(new { error = E.Message });
             }
         }
+
+        [HttpGet("view/{fileName}")]
+        public IActionResult ViewInvoice(string fileName)
+        {
+            var filePath = Path.Combine(_invoiceDirectory, fileName);
+
+            if(System.IO.File.Exists(filePath))
+            {
+                var fileBytes = System.IO.File.ReadAllBytes(filePath);
+                return File(fileBytes, "application/pdf", fileName);
+            }
+
+            return NotFound("File not found!");
+        }
     }
 }
