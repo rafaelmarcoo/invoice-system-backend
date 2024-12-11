@@ -11,6 +11,7 @@ namespace invoice_system_backend.Controllers
     public class InvoiceController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly string _invoiceDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Invoices");
 
         public InvoiceController(AppDbContext context)
         {
@@ -66,6 +67,30 @@ namespace invoice_system_backend.Controllers
 
                 await _context.SaveChangesAsync();
                 return Ok(new { message = "Invoice marked as paid!" });
+            }
+            catch(Exception E)
+            {
+                return BadRequest(new { error = E.Message });
+            }
+        }
+
+        [HttpPost("save-pdf")]
+        public async Task<IActionResult> SavePdf([FromForm] IFormFile pdf)
+        {
+            try
+            {
+                if(!Directory.Exists(_invoiceDirectory))
+                {
+                    Directory.CreateDirectory(_invoiceDirectory);
+                }
+
+                var filePath = Path.Combine(_invoiceDirectory, pdf.FileName);
+                using(var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await pdf.CopyToAsync(stream);
+                }
+
+                return Ok(new { message = "Invoice saved successfully!", FilePath = filePath });
             }
             catch(Exception E)
             {
