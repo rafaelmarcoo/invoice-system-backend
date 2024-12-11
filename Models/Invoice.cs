@@ -31,6 +31,8 @@ namespace invoice_system_backend.Models
         [Required]
         public string Status { get; set; }
 
+        public string FilePath { get; set; }
+
         public List<InvoiceItem> Items { get; set; } = new List<InvoiceItem>();
     }
 }

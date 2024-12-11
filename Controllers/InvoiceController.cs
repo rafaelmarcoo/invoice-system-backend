@@ -74,8 +74,8 @@ namespace invoice_system_backend.Controllers
             }
         }
 
-        [HttpPost("save-pdf")]
-        public async Task<IActionResult> SavePdf([FromForm] IFormFile pdf)
+        [HttpPost("save-pdf/{invoiceId}")]
+        public async Task<IActionResult> SavePdf([FromForm] IFormFile pdf, int invoiceId)
         {
             try
             {
@@ -89,6 +89,10 @@ namespace invoice_system_backend.Controllers
                 {
                     await pdf.CopyToAsync(stream);
                 }
+
+                var invoice = await _context.Invoices.FirstOrDefaultAsync(i => i.Id == invoiceId);
+                invoice.FilePath = pdf.FileName;
+                await _context.SaveChangesAsync();
 
                 return Ok(new { message = "Invoice saved successfully!", FilePath = filePath });
             }
