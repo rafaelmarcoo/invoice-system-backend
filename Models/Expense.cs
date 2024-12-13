@@ -21,5 +21,7 @@ namespace invoice_system_backend.Models
         public float Amount { get; set; }
 
         public string Category { get; set; }
+
+        public float GstRate { get; set; }
     }
 }
