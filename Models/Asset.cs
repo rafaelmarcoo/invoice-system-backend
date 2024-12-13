@@ -12,8 +12,11 @@
 
         public string DepreciationType { get; set; }
 
+        public decimal DepreciationRate { get; set; }
+
         public decimal OriginalValue { get; set; }
 
         public int UsefulLife { get; set; }
+
     }
 }
