@@ -23,7 +23,8 @@ namespace invoice_system_backend.Controllers
             [FromForm] string title,
             [FromForm] string description,
             [FromForm] string date,
-            [FromForm] float amount)
+            [FromForm] float amount,
+            [FromForm] string category)
         {
             if (file != null)
             {
@@ -46,7 +47,8 @@ namespace invoice_system_backend.Controllers
                         Description = description,
                         FilePath = file.FileName,
                         Date = date,
-                        Amount = amount
+                        Amount = amount,
+                        Category = category
                     };
 
                     _context.Expenses.Add(expense);
@@ -68,7 +70,8 @@ namespace invoice_system_backend.Controllers
                         Description = description,
                         FilePath = "NO FILES UPLOADED",
                         Date = date,
-                        Amount = amount
+                        Amount = amount,
+                        Category = category
                     };
 
                     _context.Expenses.Add(expense);

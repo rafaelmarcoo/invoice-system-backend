@@ -19,5 +19,7 @@ namespace invoice_system_backend.Models
 
         [Required]
         public float Amount { get; set; }
+
+        public string Category { get; set; }
     }
 }
