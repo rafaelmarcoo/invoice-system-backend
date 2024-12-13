@@ -19,7 +19,7 @@ namespace invoice_system_backend.Controllers
 
         [HttpPost]
         public async Task<IActionResult> AddExpense(
-            [FromForm] IFormFile file,
+            [FromForm] IFormFile? file,
             [FromForm] string title,
             [FromForm] string description,
             [FromForm] string date,
