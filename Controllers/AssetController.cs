@@ -32,6 +32,20 @@ namespace invoice_system_backend.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAssets()
+        {
+            try
+            {
+                var assetList = await _context.Assets.ToListAsync();
+                return Ok(assetList);
+            }
+            catch (Exception E)
+            {
+                return BadRequest(new { error = E.Message });
+            }
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDepreciation(int id)
         {
@@ -56,8 +70,8 @@ namespace invoice_system_backend.Controllers
                             Year = year,
                             OriginalValue = ogValue,
                             DepreciationRate = depRate,
-                            DepreciationClaimed = depClaimed,
-                            AdjustedTaxValue = adjTaxVal,
+                            DepreciationClaimed = Math.Round(depClaimed, 2),
+                            AdjustedTaxValue = Math.Round(adjTaxVal, 2),
                         });
 
                         if (adjTaxVal < depClaimed)
@@ -70,8 +84,8 @@ namespace invoice_system_backend.Controllers
                                 Year = year + 1,
                                 OriginalValue = ogValue,
                                 DepreciationRate = depRate,
-                                DepreciationClaimed = depClaimed,
-                                AdjustedTaxValue = adjTaxVal,
+                                DepreciationClaimed = Math.Round(depClaimed, 2),
+                                AdjustedTaxValue = Math.Round(adjTaxVal, 2),
                             });
                         }
                     }
@@ -83,21 +97,6 @@ namespace invoice_system_backend.Controllers
                     decimal adjTaxVal = ogValue;
                     int usefulLife = asset.UsefulLife;
 
-                    //for (int year = 1; adjTaxVal > 0; year++)
-                    //{
-                    //    decimal depClaimed = adjTaxVal * depRate;
-                    //    adjTaxVal -= depClaimed;
-
-                    //    depreciationData.Add(new DepreciationData
-                    //    {
-                    //        Year = year,
-                    //        OriginalValue = ogValue,
-                    //        DepreciationRate = depRate,
-                    //        DepreciationClaimed = depClaimed,
-                    //        AdjustedTaxValue = adjTaxVal,
-                    //    });
-                    //}
-
                     for (int year = 1; year <= usefulLife; year++)
                     {
                         decimal depClaimed = adjTaxVal * depRate;
@@ -108,8 +107,8 @@ namespace invoice_system_backend.Controllers
                             Year = year,
                             OriginalValue = ogValue,
                             DepreciationRate = depRate,
-                            DepreciationClaimed = depClaimed,
-                            AdjustedTaxValue = adjTaxVal,
+                            DepreciationClaimed = Math.Round(depClaimed, 2),
+                            AdjustedTaxValue = Math.Round(adjTaxVal, 2),
                         });
                     }
 
