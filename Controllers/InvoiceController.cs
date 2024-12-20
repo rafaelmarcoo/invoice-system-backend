@@ -23,13 +23,13 @@ namespace invoice_system_backend.Controllers
         {
             try
             {
+                newInvoice.Amount = Math.Round(newInvoice.Amount, 2);
+                newInvoice.Gst = Math.Round(newInvoice.Gst, 2);
                 _context.Invoices.Add(newInvoice);
                 await _context.SaveChangesAsync();
 
                 var createdInv = await _context.Invoices.FirstOrDefaultAsync(i => i.Id == newInvoice.Id);
 
-                //return Ok(new { message = "Succesfully made a new invoice!" });
-                //return Ok(new { id = newInvoice.Id });
                 return Ok(createdInv);
 
             }
@@ -55,13 +55,18 @@ namespace invoice_system_backend.Controllers
         }
 
         [HttpPut("{editId}")]
-        public async Task<IActionResult> EditInvoice(int editId)
+        public async Task<IActionResult> MarkInvoiceAsPaid(int editId)
         {
             try
             {
                 var invoice = await _context.Invoices.FirstOrDefaultAsync(inv => inv.Id == editId);
-                invoice.Status = "Paid";
 
+                if (invoice == null)
+                {
+                    return NotFound(new { message = "Invoice not found" });
+                }
+
+                invoice.Status = "Paid";
                 String currentDate = DateTime.Now.ToString("yyyy-MM-dd");
                 invoice.DatePaid = currentDate;
 
@@ -94,7 +99,6 @@ namespace invoice_system_backend.Controllers
                 invoice.FilePath = pdf.FileName;
                 await _context.SaveChangesAsync();
 
-                //return Ok(new { message = "Invoice saved successfully!", FilePath = filePath });
                 return Ok(new { message = "Invoice saved successfully!" });
             }
             catch(Exception E)

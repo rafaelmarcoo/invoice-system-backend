@@ -23,10 +23,10 @@ namespace invoice_system_backend.Models
         public string DatePaid { get; set; }
 
         [Required]
-        public float Amount { get; set; }
+        public decimal Amount { get; set; }
 
         [Required]
-        public float Gst { get; set; }
+        public decimal Gst { get; set; }
 
         [Required]
         public string Status { get; set; }
