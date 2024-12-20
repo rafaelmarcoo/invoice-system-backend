@@ -53,6 +53,11 @@ namespace invoice_system_backend.Controllers
             {
                 var client = await _context.Clients.FirstOrDefaultAsync(c => c.Id == editId);
 
+                if (client == null)
+                {
+                    return NotFound(new { message = "Company not found" });
+                }
+
                 client.CompanyCode = updatedClient.CompanyCode;
                 client.GstNumber = updatedClient.GstNumber;
                 client.Name = updatedClient.Name;

@@ -8,6 +8,7 @@ namespace invoice_system_backend.Models
         [Key]
         public int Id { get; set; }
 
+        [Required]
         public string CompanyCode { get; set; }
 
         [Required]
