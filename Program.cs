@@ -1,6 +1,7 @@
 using invoice_system_backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Cors;
+using invoice_system_backend.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ Console.WriteLine($"Connection String: {connectionString}");
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+builder.Services.AddScoped<EmailService>();
 
 // Enabling CORS for React App
 builder.Services.AddCors(options =>

@@ -7,5 +7,9 @@
         public string Subject { get; set; }
 
         public string Body { get; set; }
+
+        public IFormFile File { get; set; }
+
+        public string FileName { get; set; }
     }
 }

@@ -13,21 +13,24 @@ namespace invoice_system_backend.Controllers
             _config = config;
         }
 
-        public async Task SendEmailAsync(string to, string subject, string body)
+        public async Task SendEmailAsync(string to, string subject, string body, byte[] fileData, string fileName)
         {
             var emailSettings = _config.GetSection("EmailSettings");
 
             var email = new MimeMessage();
-            email.From.Add(new MailboxAddress("Your App Name", emailSettings["SenderEmail"]));
+            email.From.Add(new MailboxAddress("HexWeb Ltd.", emailSettings["SenderEmail"]));
             email.To.Add(new MailboxAddress("", to));
             email.Subject = subject;
 
-            email.Body = new TextPart("html")
+            var bodyBuilder = new BodyBuilder
             {
-                Text = body
+                HtmlBody = body
             };
+            bodyBuilder.Attachments.Add(fileName, fileData);
 
-            using(var smtp = new SmtpClient())
+            email.Body = bodyBuilder.ToMessageBody();
+
+            using (var smtp = new SmtpClient())
             {
                 await smtp.ConnectAsync(emailSettings["SMTPServer"], int.Parse(emailSettings["Port"]), MailKit.Security.SecureSocketOptions.StartTls);
                 await smtp.AuthenticateAsync(emailSettings["SenderEmail"], emailSettings["SenderPassword"]);
