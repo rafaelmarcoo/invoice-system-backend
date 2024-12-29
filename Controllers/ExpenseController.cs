@@ -23,9 +23,9 @@ namespace invoice_system_backend.Controllers
             [FromForm] string title,
             [FromForm] string description,
             [FromForm] string date,
-            [FromForm] float amount,
+            [FromForm] decimal amount,
             [FromForm] string category,
-            [FromForm] float gstRate)
+            [FromForm] decimal gstRate)
         {
             if (file != null)
             {
@@ -48,9 +48,9 @@ namespace invoice_system_backend.Controllers
                         Description = description,
                         FilePath = file.FileName,
                         Date = date,
-                        Amount = amount,
+                        Amount = Math.Round(amount, 2),
                         Category = category,
-                        GstRate = gstRate,
+                        GstRate = Math.Round(gstRate, 2),
                     };
 
                     _context.Expenses.Add(expense);
@@ -72,9 +72,9 @@ namespace invoice_system_backend.Controllers
                         Description = description,
                         FilePath = "NO FILES UPLOADED",
                         Date = date,
-                        Amount = amount,
+                        Amount = Math.Round(amount, 2),
                         Category = category,
-                        GstRate = gstRate,
+                        GstRate = Math.Round(gstRate, 2),
                     };
 
                     _context.Expenses.Add(expense);
