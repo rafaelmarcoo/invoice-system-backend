@@ -153,8 +153,8 @@ namespace invoice_system_backend.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("numeric");
+                    b.Property<float>("Amount")
+                        .HasColumnType("real");
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -172,8 +172,8 @@ namespace invoice_system_backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal>("GstRate")
-                        .HasColumnType("numeric");
+                    b.Property<float>("GstRate")
+                        .HasColumnType("real");
 
                     b.Property<string>("Title")
                         .IsRequired()
