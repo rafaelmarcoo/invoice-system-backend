@@ -18,12 +18,12 @@ namespace invoice_system_backend.Models
         public string Date { get; set; }
 
         [Required]
-        public float Amount { get; set; }
+        public decimal Amount { get; set; }
 
         [Required]
         public string Category { get; set; }
 
         [Required]
-        public float GstRate { get; set; }
+        public decimal GstRate { get; set; }
     }
 }
