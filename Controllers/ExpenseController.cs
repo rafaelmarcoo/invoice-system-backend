@@ -21,7 +21,7 @@ namespace invoice_system_backend.Controllers
         public async Task<IActionResult> AddExpense(
             [FromForm] IFormFile? file,
             [FromForm] string title,
-            [FromForm] string description,
+            [FromForm] string? description,
             [FromForm] string date,
             [FromForm] float amount,
             [FromForm] string category,
@@ -53,6 +53,11 @@ namespace invoice_system_backend.Controllers
                         GstRate = gstRate,
                     };
 
+                    if(expense.Description == null)
+                    {
+                        expense.Description = "---";
+                    }
+
                     _context.Expenses.Add(expense);
                     await _context.SaveChangesAsync();
                     return Ok(new { message = "Successfully added a new expense!" });
@@ -76,6 +81,11 @@ namespace invoice_system_backend.Controllers
                         Category = category,
                         GstRate = gstRate,
                     };
+
+                    if (expense.Description == null)
+                    {
+                        expense.Description = "---";
+                    }
 
                     _context.Expenses.Add(expense);
                     await _context.SaveChangesAsync();

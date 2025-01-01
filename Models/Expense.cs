@@ -20,8 +20,10 @@ namespace invoice_system_backend.Models
         [Required]
         public float Amount { get; set; }
 
+        [Required]
         public string Category { get; set; }
 
+        [Required]
         public float GstRate { get; set; }
     }
 }
