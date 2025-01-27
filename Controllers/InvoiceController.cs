@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.Reflection.Metadata;
-using System.Text.Json;
+﻿using System.Text.Json;
 using invoice_system_backend.Data;
 using invoice_system_backend.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -35,11 +33,11 @@ namespace invoice_system_backend.Controllers
                 return Ok(createdInv);
 
             }
-            catch (Exception E)
+            catch(Exception E)
             {
-                return BadRequest(new { error = E.Message });
+                return BadRequest(new { error = E.Message});
             }
-
+            
         }
 
         [HttpGet]
@@ -75,7 +73,7 @@ namespace invoice_system_backend.Controllers
                 await _context.SaveChangesAsync();
                 return Ok(new { message = "Invoice marked as paid!" });
             }
-            catch (Exception E)
+            catch(Exception E)
             {
                 return BadRequest(new { error = E.Message });
             }
@@ -86,13 +84,13 @@ namespace invoice_system_backend.Controllers
         {
             try
             {
-                if (!Directory.Exists(_invoiceDirectory))
+                if(!Directory.Exists(_invoiceDirectory))
                 {
                     Directory.CreateDirectory(_invoiceDirectory);
                 }
 
                 var filePath = Path.Combine(_invoiceDirectory, pdf.FileName);
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                using(var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await pdf.CopyToAsync(stream);
                 }
@@ -103,7 +101,7 @@ namespace invoice_system_backend.Controllers
 
                 return Ok(new { message = "Invoice saved successfully!" });
             }
-            catch (Exception E)
+            catch(Exception E)
             {
                 return BadRequest(new { error = E.Message });
             }
@@ -114,7 +112,7 @@ namespace invoice_system_backend.Controllers
         {
             var filePath = Path.Combine(_invoiceDirectory, fileName);
 
-            if (System.IO.File.Exists(filePath))
+            if(System.IO.File.Exists(filePath))
             {
                 var fileBytes = System.IO.File.ReadAllBytes(filePath);
                 return File(fileBytes, "application/pdf", fileName);
@@ -122,6 +120,5 @@ namespace invoice_system_backend.Controllers
 
             return NotFound("File not found!");
         }
-
     }
 }
